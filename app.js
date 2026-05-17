@@ -1,38 +1,59 @@
-const express = require("express");
-const fs = require("fs");
-const path = require("path");
-const app = express();
-const PORT = process.env.PORT || 3000;
+// importing http from node
+const http=require('http');
+const { title } = require('process');
 
-app.get("/abc", (req, res) => {
-  res.json({ message: "Hello from Express + pnpm", path: "/abc", dev: true });
-});
 
-app.get("/create-folder-file", (req, res) => {
-  const folderName = "myFolder";
-  const fileName = "myFile.txt";
-  const content = "This is the content of the file.";
+const message={welcome:'hello world'};
 
-  // Create folder if it doesn't exist
-  if (!fs.existsSync(folderName)) {
-    fs.mkdirSync(folderName);
+const getData=(req,res)=>{
+ const reqMethod= req.method;
+  if(req.url==='/' && reqMethod==='GET'){
+    res.setHeader('Content-Type','application/json');
+    res.write(JSON.stringify(message));
+    res.end();
   }
+  if(req.url==='/about' && reqMethod==='GET'){
+    res.setHeader('Content-Type','application/json');
+    res.write(JSON.stringify({about:'this is about page'}));
+    res.end();
+  }
+   if(req.url==='/contact' && reqMethod==='GET'){
+    res.setHeader('Content-Type','application/json');
+    res.write(JSON.stringify({contact:'this is contact page'}));
+    res.end();
+  }
+   if(req.url==='/help' && reqMethod==='GET'){
+    res.setHeader('Content-Type','application/json');
+    res.write(JSON.stringify({help:'this is help page'}));
+    res.end();
+  }
+   if(req.url==='/services' && reqMethod==='GET'){
+    res.setHeader('Content-Type','application/json');
+    res.write(JSON.stringify({services:'this is services page'}));
+    res.end();
+  }
+   if(req.url==='/products' && reqMethod==='GET'){
+    const status=res.statusCode=200;
+    res.setHeader('Content-Type','application/json');
+    res.write(JSON.stringify({products:[{title:'this is a product',
+      description:'this is a product description'},
+      {title:'this is another product',
+        description:'this is another product description'  }],status,}));
+    res.end();
+  }
+   if(req.url==='/blog' && reqMethod==='GET'){
+    res.setHeader('Content-Type','application/json');
+    res.write(JSON.stringify({blog:'this is blog page'}));
+    res.end();
+  }
+}
 
-  const filePath = path.join(folderName, fileName);
-  // Create file inside folder
-  fs.writeFile(filePath                 , content, (err) => {
-    if (err) {
-      console.log("Error:", err);
-      res.status(500).json({ message: "Error creating folder and file" });
-    } else {
-      console.log("File created inside folder!");
-      res.json({ message: "Folder and file created successfully!" });
-    }
-  });
-});
 
-  // Create folder if i
+const server=http.createServer(getData);
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+
+server.listen(3000,(req,res)=>{
+  // res.send('hello world');
+  // res.end();
+    console.log('server is running on port 3000');
+})
