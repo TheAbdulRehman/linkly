@@ -12,11 +12,6 @@ const getData=(req,res)=>{
     res.write(JSON.stringify(message));
     res.end();
   }
-  if(req.url==='/about' && reqMethod==='GET'){
-    res.setHeader('Content-Type','application/json');
-    res.write(JSON.stringify({about:'this is about page'}));
-    res.end();
-  }
 }
 
 
