@@ -1,20 +1,12 @@
-// importing http from node
-import http = require('http');
-import type { IncomingMessage, ServerResponse } from 'http';
 
-const message = { welcome: 'hello world' };
+const http = require("http");
 
-const getData = (req: IncomingMessage, res: ServerResponse) => {
-  const reqMethod = req.method;
-  if (req.url === '/' && reqMethod === 'GET') {
-    res.setHeader('Content-Type', 'application/json');
-    res.write(JSON.stringify(message));
-    res.end();
-  }
+const requestHandler = async (req:any, res:any) => {
+ 
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.end();
 };
 
-const server = http.createServer(getData);
-
-server.listen(3000, () => {
-  console.log('server is running on port 3000');
+http.createServer(requestHandler).listen(3000, () => {
+  console.log("Server running at http://localhost:3000");
 });
