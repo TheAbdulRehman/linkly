@@ -9,7 +9,9 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "start": "node dist/app.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "migrate":"node dist/migrate.js",
+    "seed":"node dist/seed.js"
   },
   "keywords": [],
   "author": "Abdul Rehman",
