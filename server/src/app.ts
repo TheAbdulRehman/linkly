@@ -1,12 +1,23 @@
+require('dotenv').config();
+const {getAllUsers}=require('./queries')
+const express = require('express');
 
-const http = require("http");
+const app = express()
+const port = process.env.PORT
 
-const requestHandler = async (req:any, res:any) => {
- 
-  res.writeHead(200, { "Content-Type": "text/plain" });
-  res.end();
-};
+app.get('/api/users',async (req:any, res:any) => {
+  const response=await getAllUsers()
+const users=JSON.stringify(response)
+console.log(users)
+  res.send(users)
+})
+app.get('/api/boards',async (req:any, res:any) => {
+  const response=await getAllUsers()
+const users=JSON.stringify(response)
+console.log(users)
+  res.send(users)
+})
 
-http.createServer(requestHandler).listen(3000, () => {
-  console.log("Server running at http://localhost:3000");
-});
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
